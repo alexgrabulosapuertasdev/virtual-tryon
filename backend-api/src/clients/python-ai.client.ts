@@ -10,12 +10,12 @@ export class PythonAiClient {
 
     formData.append(
       'person_image',
-      data.person.buffer,
+      new Blob([data.person.buffer]),
       data.person.originalname,
     );
     formData.append(
       'garment_image',
-      data.garment.buffer,
+      new Blob([data.garment.buffer]),
       data.garment.originalname,
     );
     formData.append('garment_type', data.garmentType);
