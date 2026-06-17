@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: ./frontend-angular
+    ports:
+      - "4200:80"
+    depends_on:
+      - nest
+
+  nest:
+    build: ./nest-api
+    ports:
+      - "3000:3000"
+    environment:
+      - PYTHON_URL=http://ai-service:8000
+    depends_on:
+      - ai-service
+
+  ai-service:
+    build: ./ai-service-python
+    ports:
+      - "8000:8000"
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
