@@ -1,0 +1,148 @@
+<main>
+  <div class="upload-grid">
+    <!-- PERSONA -->
+    <div class="upload-card">
+      <label>1 · Imagen de la persona</label>
+
+      <div class="drop-zone" [class.dragover]="false">
+        @if (!personFile) {
+          <div class="placeholder">
+            <span>Arrastra o haz clic</span>
+            <span style="font-size: 0.75rem">JPG · PNG · WEBP</span>
+          </div>
+        }
+
+        @if (personPreview) {
+          <img [src]="personPreview" />
+        }
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onPersonSelected($event)"
+        />
+      </div>
+    </div>
+
+    <!-- PRENDA -->
+    <div class="upload-card">
+      <label>2 · Imagen de la prenda</label>
+
+      <div class="drop-zone">
+        @if (!garmentFile) {
+          <div class="placeholder">
+            <span>Arrastra o haz clic</span>
+            <span style="font-size: 0.75rem">JPG · PNG · WEBP</span>
+          </div>
+        }
+
+        @if (garmentPreview) {
+          <img [src]="garmentPreview" />
+        }
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onGarmentSelected($event)"
+        />
+      </div>
+
+      <label style="margin-top: 0.5rem">Tipo de prenda</label>
+
+      <div class="garment-selector">
+        <button
+          class="garment-btn"
+          [class.active]="garmentType === 'top'"
+          (click)="setGarmentType('top')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path
+              stroke="currentColor"
+              stroke-width="1.5"
+              d="M9 3L3 9l3 1v10h12V10l3-1-6-6"
+            />
+          </svg>
+          Camiseta
+        </button>
+
+        <button
+          class="garment-btn"
+          [class.active]="garmentType === 'bottom'"
+          (click)="setGarmentType('bottom')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path
+              stroke="currentColor"
+              stroke-width="1.5"
+              d="M5 5h14l-2 14H7L5 5z"
+            />
+          </svg>
+          Pantalón
+        </button>
+
+        <button
+          class="garment-btn"
+          [class.active]="garmentType === 'dress'"
+          (click)="setGarmentType('dress')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path
+              stroke="currentColor"
+              stroke-width="1.5"
+              d="M12 2l4 6-4 2-4-2 4-6zm-4 8l-4 12h16L16 10"
+            />
+          </svg>
+          Vestido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTÓN -->
+  <button
+    class="btn-run"
+    (click)="generateTryOn()"
+    [disabled]="loading || !personFile || !garmentFile"
+  >
+    Generar Virtual Try-On
+  </button>
+
+  <!-- STATUS BAR -->
+  <div
+    class="status-bar"
+    [class.visible]="statusType !== ''"
+    [class.error]="statusType === 'error'"
+    [class.success]="statusType === 'success'"
+  >
+    @if (statusType === "loading") {
+      <span class="spinner"></span>
+    }
+
+    <span>{{ statusMessage }}</span>
+  </div>
+
+  <!-- RESULTADO -->
+  @if (resultUrl) {
+    <div class="result-section">
+      <h2>Resultado generado</h2>
+
+      <div class="result-container">
+        <div class="result-image-wrap">
+          <img [src]="resultUrl" alt="Resultado Virtual Try-On" />
+        </div>
+
+        <div class="result-info">
+          <p>
+            La imagen ha sido generada mediante el modelo
+            <strong>IDM-VTON</strong> con procesamiento de pose usando MediaPipe
+            y postprocesado propio.
+          </p>
+
+          <a class="btn-download" [href]="resultUrl" download>
+            Descargar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+  }
+</main>
