@@ -1,6 +1,6 @@
 .env
 __pycache__
 models
-backend/temp
+backend-ia/temp
 venv
 venv_new
