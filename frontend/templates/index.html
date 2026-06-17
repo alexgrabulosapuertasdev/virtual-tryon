@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Try-On</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Virtual Try‑On</h1>
+    <span>Prototipo TFG · UNIR 2025/2026</span>
+  </header>
+
+  <main>
+
+    <div class="upload-grid">
+
+      <!-- Imagen persona -->
+      <div class="upload-card">
+        <label>1 · Imagen de la persona</label>
+        <div class="drop-zone" id="person-drop">
+          <div class="placeholder">
+            <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <span>Arrastra o haz clic</span>
+            <span style="font-size:0.75rem">JPG · PNG · WEBP</span>
+          </div>
+          <input type="file" id="person-input" accept="image/jpeg,image/png,image/webp" />
+        </div>
+      </div>
+
+      <!-- Imagen prenda -->
+      <div class="upload-card">
+        <label>2 · Imagen de la prenda</label>
+        <div class="drop-zone" id="garment-drop">
+          <div class="placeholder">
+            <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2h-4M9 3a2 2 0 002 2h2a2 2 0 002-2M9 3a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            <span>Arrastra o haz clic</span>
+            <span style="font-size:0.75rem">JPG · PNG · WEBP</span>
+          </div>
+          <input type="file" id="garment-input" accept="image/jpeg,image/png,image/webp" />
+        </div>
+
+        <!-- Selector tipo de prenda -->
+        <label style="margin-top:0.5rem">Tipo de prenda</label>
+        <div class="garment-selector">
+          <button class="garment-btn active" data-type="top">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3L3 9l3 1v10h12V10l3-1-6-6"/>
+            </svg>
+            Camiseta
+          </button>
+          <button class="garment-btn" data-type="bottom">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 5h14l-2 14H7L5 5z"/>
+            </svg>
+            Pantalón
+          </button>
+          <button class="garment-btn" data-type="dress">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2l4 6-4 2-4-2 4-6zm-4 8l-4 12h16L16 10"/>
+            </svg>
+            Vestido
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Botón ejecutar -->
+    <button class="btn-run" id="btn-run" disabled>
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/>
+      </svg>
+      Generar Virtual Try-On
+    </button>
+
+    <!-- Barra de estado -->
+    <div class="status-bar" id="status-bar" style="margin-top:1.5rem">
+      <div class="spinner" id="status-spinner"></div>
+      <span id="status-msg"></span>
+    </div>
+
+    <!-- Resultado -->
+    <div class="result-section" id="result-section">
+      <h2>Resultado generado</h2>
+      <div class="result-container">
+        <div class="result-image-wrap">
+          <img id="result-img" src="" alt="Resultado del Virtual Try-On" />
+        </div>
+        <div class="result-info">
+          <p>
+            La imagen ha sido generada mediante el modelo <strong>IDM-VTON</strong>.
+            La máscara de la región de la prenda ha sido calculada mediante
+            <strong>MediaPipe Pose</strong>, detectando los puntos clave del cuerpo
+            para una adaptación más precisa según el tipo de prenda seleccionado.
+          </p>
+          <a class="btn-download" id="btn-download" href="#" download>
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Descargar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

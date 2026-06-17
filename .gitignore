@@ -1,0 +1,6 @@
+.env
+__pycache__
+models
+backend/temp
+venv
+venv_new
