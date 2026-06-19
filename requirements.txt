@@ -6,3 +6,5 @@ requests==2.31.0
 python-dotenv==1.0.1
 aiofiles==23.2.1
 gradio-client==0.16.3
+opencv-python==4.11.0.86
+mediapipe==0.10.35
